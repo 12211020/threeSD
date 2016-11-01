@@ -1,0 +1,78 @@
+
+/*导航栏按钮图标*/
+.ui-icon-menu{background: url(../resource/icons/button_icons/menus.png) no-repeat  center!important;}
+.ui-icon-create{background: url(../resource/icons/button_icons/create.png) no-repeat  center!important;}
+.ui-icon-open{background: url(../resource/icons/button_icons/open.png) no-repeat  center!important;}
+.ui-icon-save{background: url(../resource/icons/button_icons/save.png) no-repeat  center!important;}
+.ui-icon-saveAs{background: url(../resource/icons/button_icons/saveAs.png) no-repeat  center!important;}
+.ui-icon-export{background: url(../resource/icons/button_icons/export.png) no-repeat  center!important;}
+.ui-icon-parameter{background: url(../resource/icons/button_icons/parameter.png) no-repeat  center!important;}
+.ui-icon-list{background: url(../resource/icons/button_icons/list.png) no-repeat  center!important;}
+.ui-icon-operate{background: url(../resource/icons/button_icons/operate.png) no-repeat  center!important;}
+.ui-icon-translate{background: url(../resource/icons/button_icons/translate.png) no-repeat  center!important;}
+.ui-icon-rotate{background: url(../resource/icons/button_icons/rotate.png) no-repeat  center!important;}
+.ui-icon-scale{background: url(../resource/icons/button_icons/scale.png) no-repeat  center!important;}
+.ui-icon-combine{background: url(../resource/icons/button_icons/combine.png) no-repeat  center!important;}
+.ui-icon-separate{background: url(../resource/icons/button_icons/separate.png) no-repeat  center!important;}
+.ui-icon-assembly{background: url(../resource/icons/button_icons/assembly.png) no-repeat  center!important;}
+.ui-icon-align{background: url(../resource/icons/button_icons/align.png) no-repeat  center!important;}
+.ui-icon-alignX{background: url(../resource/icons/button_icons/alignX.png) no-repeat  center!important;}
+.ui-icon-alignY{background: url(../resource/icons/button_icons/alignY.png) no-repeat  center!important;}
+.ui-icon-alignZ{background: url(../resource/icons/button_icons/alignZ.png) no-repeat  center!important;}
+.ui-icon-selectBox{background: url(../resource/icons/button_icons/selectBox.png) no-repeat  center!important;}
+.ui-icon-copy{background: url(../resource/icons/button_icons/copy.png) no-repeat  center!important;}
+.ui-icon-delete{background: url(../resource/icons/button_icons/delete.png) no-repeat  center!important;}
+.ui-icon-back{background: url(../resource/icons/button_icons/back.png) no-repeat  center!important;}
+.ui-icon-reset{background: url(../resource/icons/button_icons/reset.png) no-repeat  center!important;}
+.ui-icon-resetAttitude{background: url(../resource/icons/button_icons/resetAttitude.png) no-repeat  center!important;}
+.ui-icon-resetPosition{background: url(../resource/icons/button_icons/resetPosition.png) no-repeat  center!important;}
+.ui-icon-resetScale{background: url(../resource/icons/button_icons/resetScale.png) no-repeat  center!important;}
+.ui-icon-classifyManagement{background: url(../resource/icons/button_icons/classifyManagement.png) no-repeat  center!important;}
+.ui-icon-statistic{background: url(../resource/icons/button_icons/statistic.png) no-repeat  center!important;}
+#menus{
+    margin: 0;
+}
+
+#componentID{
+    margin-top: 3px;
+    border:0;
+    padding: 0;
+    background: transparent;
+}
+
+.menu_button{
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    padding: 0;
+    outline: none;
+}
+.export_button{
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    padding: 0;
+    outline: none;
+    width: 120px;
+}
+.menu_button:hover{
+    background-color: rgba(208,142,86,0.5);
+
+}
+.dropdown_menu{
+    background:#3D3D3D;
+    border: solid 2px #606068;
+    min-width: 120px;
+    top: 106%;
+}
+.dropright_menu{
+    background: transparent;
+    color: #3D3D3D;
+    border: none;
+    min-width: 120px;
+    top: 106%;
+}
+/*隐藏提示框的关闭按钮类*/
+.no-close .ui-dialog-titlebar-close{
+    display: none;
+}

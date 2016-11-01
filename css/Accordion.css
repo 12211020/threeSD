@@ -1,0 +1,101 @@
+.header{
+    background-color: #080808;
+    color: #ffffff;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+.header:focus{
+    outline: none;
+}
+.button{
+    position: relative;
+    height: 110px;
+    width: 100%;
+    border-bottom: 1px solid #ffffff;
+    text-align: center;
+}
+
+.button:hover{
+    border:solid rgba(208, 142, 86, 0.5) 2px;
+}
+
+.selectBoxDiv{
+    position: absolute;
+    border : dotted 2px white;
+    left: 0;
+    right: 0;
+}
+#ModelLibrary{
+    background-color:#212125;
+    border-right: 3px solid #3F4757 ;
+    /*float: left;*/
+    width: 160px;
+    z-index: 100;
+}
+
+#mainFrame{
+    position: absolute;
+    border: 3px solid #3F4757;
+    overflow:hidden;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    /*margin: 0 0 0 0;*/
+}
+
+#MenuSpace{
+    background-color: #26262B;
+    width: 100%;
+    border-bottom:  3px solid #3F4757;
+    /*border-top: 3px solid #3F4757 ;*/
+    /*border-right: 3px solid #3F4757 ;*/
+    /*margin-bottom: 0*/
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    /*background-color: #ED9999;*/
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 6px;
+    border-radius: 8px;
+    /*background-color: #ED9999;*/
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0,0,0,0.3);
+}
+
+body{
+    scrollbar-face-color:rgba(0,0,0,0.3);
+    scrollbar-shadow-color:rgba(0,0,0,0.3);
+    scrollbar-track-color:#ffffff;
+    scrollbar-arrow-color:#000000;
+}
+
+#WorkSpace{
+    display: box;
+    display: -webkit-box;
+    width: 100%;
+}
+
+#desiginScene{
+    -webkit-box-flex:1;
+    z-index: 10;
+}
+
+#ModelLibrary,#desiginScene{
+    -webkit-box-sizing:border-box;
+}

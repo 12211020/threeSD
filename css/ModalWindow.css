@@ -1,0 +1,32 @@
+.dialog_input{
+    width: 50%;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    line-height: 0.12857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.dialog_updown{
+    height: 12px;
+    font-size: 3px;
+    padding: 0;
+    margin: 0;
+}
+.dialog_div{
+    padding-bottom: 7px;
+}
+
+.ui-dialog-titlebar{
+    background-color: #000000;
+    color: #ffffff;
+}
+.ui-dialog{
+    background: #212125;
+}
+.ui-dialog-content{
+    color: #ffffff;
+}

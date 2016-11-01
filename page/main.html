@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../lib/Bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../lib/Bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="../css/Accordion.css">
+    <link rel="stylesheet" href="../css/Navigation.css">
+    <link rel="stylesheet" href="../css/ModalWindow.css">
+
+
+    <link rel="stylesheet" href="../css/jquery.contextmenu.css">
+
+    <script src="../lib/jquery/jquery.min.js" onload="try{window.$ = window.jQuery = module.exports;}catch(err){}"></script>
+    <script src="../lib/Bootstrap/bootstrap.min.js"></script>
+    <script src="../lib/jquery-ui/jquery-ui.js"></script>
+
+    <script src="../js/XMLAnalysis.js"></script>
+    <script src="../lib/jquery/jquery.contextmenu.js"></script>
+
+
+    <script src="../js/MessageBox.js"></script>
+
+    <script src="../js/FileOperation.js"></script>
+    <script src="../js/Mesh.js"></script>
+    <script src="../js/Navigation.js"></script>
+    <script src="../js/ListPannel.js"></script>
+    <script src="../js/OperationPannel.js"></script>
+    <script src="../js/ClassifyPannel.js"></script>
+    <script src="../js/StructParameter.js"></script>
+
+    <script src="../lib/threejs/three.min.js"></script>
+    <script src="../lib/threejs/stats.min.js"></script>
+    <script src="../lib/threejs/tween.min.js"></script>
+    <script src="../lib/threejs/TransformControls.js"></script>
+    <script src="../lib/threejs/DDSLoader.js"></script>
+    <script src="../lib/threejs/MTLLoader.js"></script>
+    <script src="../lib/threejs/OBJLoader.js"></script>
+    <script src="../lib/threejs/Detector.js"></script>
+    <script src="../lib/threejs/OrbitControls.js"></script>
+
+    <script src="../js/develop-lmy/ThreeSD.js"></script>
+    <script src="../js/develop-lmy/app.js"></script>
+
+    <script>
+
+    </script>
+</head>
+<body id="mainFrame">
+<div id="MenuSpace">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding: 1px; ">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <button id="menus" class="menu_button"  onmouseover="$('#menu_detail').css('display','block')"  onmouseout="$('#menu_detail').css('display','none')">菜单栏</button>
+                <ul id="menu_detail" class="dropdown-menu dropdown_menu" onmouseover="$('#menu_detail').css('display','block')"  onmouseout="$('#menu_detail').css('display','none')">
+                    <li>
+                        <button id="create" class="menu_button" onclick="Navigation.createFile()">新建</button>
+                    </li>
+                    <li>
+                        <button id="open" class="menu_button" onclick="Navigation.openFile()">打开</button>
+                    </li>
+                    <li>
+                        <button id="save" class="menu_button" onclick="Navigation.saveFile()">保存</button>
+                    </li>
+                    <li>
+                        <button id="saveSelected" class="menu_button" onclick="Navigation.saveSelected()">保存选中</button>
+                    </li>
+                    <li>
+                        <button id="saveAs" class="menu_button" onclick="Navigation.saveAsFile()">另存为</button>
+                    </li>
+                    <li>
+                        <!--<ul id="export_menu" class="dropright_menu">-->
+                        <!--<li><button id="export" class="menu_button">导出</button>-->
+                        <!--<ul class="dropright_menu">-->
+                        <!--<li><button id="export_mesh" class="export_button" onclick="Navigation.exportFile()">导出mesh</button></li>-->
+                        <!--<li><button id="export_scene" class="export_button">导出scene</button></li>-->
+                        <!--</ul>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <button id="export" class="menu_button" onclick="Navigation.exportFile()">导出</button>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <button id="parameter" class="menu_button" onclick="Navigation.openParaPanel()">参数</button>
+            </li>
+            <li>
+                <button id="list" class="menu_button" onclick="Navigation.openListPanel()">列表板</button>
+            </li>
+            <li>
+                <button id="operate" class="menu_button" onclick="Navigation.openOperPanel()">操作板</button>
+            </li>
+
+            <li class="dropdown">
+                <button id="edit" class="menu_button" onmouseover="$('#edit_detail').css('display', 'block')" onmouseout="$('#edit_detail').css('display', 'none')">编辑</button>
+                <ul id="edit_detail" class="dropdown-menu dropdown_menu" onmouseover="$('#edit_detail').css('display', 'block')" onmouseout="$('#edit_detail').css('display', 'none')">
+                    <li>
+                        <button id="translate" class="menu_button" onclick="api.setTransformMode('translate')">平移</button>
+                    </li>
+                    <li>
+                        <button id="rotate" class="menu_button" onclick="api.setTransformMode('rotate')">旋转</button>
+                    </li>
+                    <li>
+                        <button id="scale" class="menu_button" onclick="api.setTransformMode('scale')">缩放</button>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <button id="combine" class="menu_button" onclick="api.combine()">组合</button>
+            </li>
+            <li>
+                <button id="separate" class="menu_button" onclick="api.separate()">分离</button>
+            </li>
+            <li>
+                <button id="assembly" class="menu_button" onclick="Navigation.assembly()">点吸附</button>
+            </li>
+            <li class="dropdown">
+                <button id="coxail" class="menu_button" onmouseover="$('#coxail_detail').css('display', 'block')" onmouseout="$('#coxail_detail').css('display', 'none')">同轴吸附</button>
+                <ul id="coxail_detail" class="dropdown-menu dropdown_menu" onmouseover="$('#coxail_detail').css('display', 'block')" onmouseout="$('#coxail_detail').css('display', 'none')">
+                    <li>
+                        <button id="coxailX" class="menu_button" onclick="Navigation.coxailX()">按X轴</button>
+                    </li>
+                    <li>
+                        <button id="coxailY" class="menu_button" onclick="Navigation.coxailY()">按Y轴</button>
+                    </li>
+                    <li>
+                        <button id="coxailZ" class="menu_button" onclick="Navigation.coxailZ()">按Z轴</button>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <button id="align" class="menu_button" onmouseover="$('#align_detail').css('display', 'block')" onmouseout="$('#align_detail').css('display', 'none')">对齐</button>
+                <ul id="align_detail" class="dropdown-menu dropdown_menu" onmouseover="$('#align_detail').css('display', 'block')" onmouseout="$('#align_detail').css('display', 'none')">
+                    <li>
+                        <button id="alignX" class="menu_button" onclick="Navigation.alignX()">按X轴</button>
+                    </li>
+                    <li>
+                        <button id="alignY" class="menu_button" onclick="Navigation.alignY()">按Y轴</button>
+                    </li>
+                    <li>
+                        <button id="alignZ" class="menu_button" onclick="Navigation.alignZ()">按Z轴</button>
+                    </li>
+                </ul>
+            </li>
+            <!--<li class="dropdown">-->
+                <!--<button id="parallel" class="menu_button" onmouseover="$('#parallel_detail').css('display', 'block')" onmouseout="$('#parallel_detail').css('display', 'none')">平行</button>-->
+                <!--<ul id="parallel_detail" class="dropdown-menu dropdown_menu" onmouseover="$('#parallel_detail').css('display', 'block')" onmouseout="$('#parallel_detail').css('display', 'none')">-->
+                    <!--<li>-->
+                        <!--<button id="parallelX" class="menu_button" onclick="Navigation.parallelX()">按X轴</button>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<button id="parallelY" class="menu_button" onclick="Navigation.parallelY()">按Y轴</button>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<button id="parallelZ" class="menu_button" onclick="Navigation.parallelZ()">按Z轴</button>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+
+            <li>
+                <button id="shatterCrack" class="menu_button" onclick="Navigation.shatterCrack()">阵列</button>
+            </li>
+
+            <li>
+                <button id="selectBox" class="menu_button" onclick="Navigation.selectBox()">选框</button>
+            </li>
+            <li>
+                <button id="copy" class="menu_button" onclick="Navigation.copy()">复制</button>
+            </li>
+            <li>
+                <button id="delete" class="menu_button" onclick="Navigation.delete()">删除</button>
+            </li>
+            <li>
+                <button id="back" class="menu_button" onclick="api.design.undo()">撤销</button>
+            </li>
+            <li class="dropdown">
+                <button id="reset" class="menu_button" onmouseover="$('#reset_detail').css('display', 'block')" onmouseout="$('#reset_detail').css('display', 'none')">重置</button>
+                <ul id="reset_detail" class="dropdown-menu dropdown_menu" onmouseover="$('#reset_detail').css('display', 'block')" onmouseout="$('#reset_detail').css('display', 'none')">
+                    <li>
+                        <button id="resetPosition" class="menu_button" onclick="Navigation.resetPosition()">重置位置</button>
+                    </li>
+                    <li>
+                        <button id="resetAttitude" class="menu_button" onclick="Navigation.resetAttitude()">重置姿态</button>
+                    </li>
+                    <li>
+                        <button id="resetScale" class="menu_button" onclick="Navigation.resetScale()">重置比例</button>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <button id="classifyManagement" class="menu_button" onclick="Navigation.classifyManagement()">分类管理</button>
+            </li>
+            <li>
+                <button id="statistic" class="menu_button" onclick="Navigation.statistic()">统计</button>
+            </li>
+
+            <li>
+                <button id="setField" class="menu_button" onclick="api.setTargetOnFocus()">设定视场</button>
+            </li>
+
+            <!--<li>-->
+                <!--<button id="recoverField" class="menu_button" onclick="api.recoverFocus()">恢复视场</button>-->
+            <!--</li>-->
+
+            <li>
+                <button id="setAdhere" class="menu_button" onclick="api.setAdhere()">设为不可吸附</button>
+            </li>
+
+            <li>
+                <button id="setCameraView" class="menu_button" onclick="Navigation.setCameraView()">相机视场</button>
+            </li>
+
+            <li>
+                <button id="FrameMode" class="menu_button" onclick="Navigation.showFrame()">线框模式</button>
+            </li>
+
+            <li>
+                <button id="EntityMode" class="menu_button" onclick="Navigation.showEntity()">实体模式</button>
+            </li>
+
+            <li>
+                <input id="componentID" type="color" onchange="Navigation.updateColor()" value="#1B58B0">
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="WorkSpace">
+    <div id="ModelLibrary">
+        <div id="accordion" style="overflow: auto;">
+            <h3 class="header" style="margin: 0px;border: 0px;">
+                基础模型
+            </h3>
+
+            <div style="background-color: #212125; padding: 0 0 0 0;border: 0;" id="basic_model_panel">
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_1">-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Cube.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_2">-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Cylinder.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_3">-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Panel.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_4">-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Sphere.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_5">-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Tube.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_6">-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Disk.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_7" >-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Bar.png">-->
+                <!--</li>-->
+                <!--<li class="button" onclick="api.addModel(this)" id="baseMode_8" >-->
+                    <!--<img src="../resource/icons/model_icons/basicLoad/Stick.png">-->
+                <!--</li>-->
+            </div>
+            <h3 class="header" style="border: 0">卫星平台</h3>
+
+            <div style="padding: 0 0 0 0;border: 0; background-color: #212125;">
+                <li class="button" onclick="api.addModel(this)" id="satePlatform_1">
+                    <!--<img src="../resource/icons/model_icons/platformLoad/Probe.png">-->
+                    <img src="../resource/icons/model_icons/platformLoad/CircularPlatform.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="satePlatform_2">
+
+                    <img src="../resource/icons/model_icons/platformLoad/CubePlatform.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="satePlatform_3">
+
+                    <img src="../resource/icons/model_icons/platformLoad/Spinstabilized.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="satePlatform_4">
+
+                    <img src="../resource/icons/model_icons/platformLoad/Threeaxisstabilizedsatellite.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="satePlatform_5">
+
+                    <img src="../resource/icons/model_icons/platformLoad/DarkmatterPlatform.png">
+                </li>
+            </div>
+            <h3 id="innerLoadTitle" class="header" style="border: 0">内部组件</h3>
+
+            <div id="innerLoadModel" style="padding: 0 0 0 0;background-color: #212125;border: 0;">
+                <li class="button" onclick="api.addModel(this)" id="innerLoad_1">
+
+                    <img src="../resource/icons/model_icons/internalLoad/BatteryPack.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="innerLoad_2">
+
+                    <img src="../resource/icons/model_icons/internalLoad/Distributionbox.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="innerLoad_3">
+
+                    <img src="../resource/icons/model_icons/internalLoad/Magneticassemblylinebox.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="innerLoad_4">
+
+                    <img src="../resource/icons/model_icons/internalLoad/MomentumWheel.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="innerLoad_5">
+
+                    <img src="../resource/icons/model_icons/internalLoad/StarComputerServices.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="innerLoad_6">
+
+                    <img src="../resource/icons/model_icons/internalLoad/DarkmatterInter.png">
+                </li>
+            </div>
+            <h3 id="outLoadTile" class="header" style="border: 0">外部组件</h3>
+
+            <div id="outerLoadModel" style="padding: 0 0 0 0;background-color: #212125;border: 0;">
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_1">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Coarsesunsensor.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_2">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Datatransmissiontransmitter.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_3">
+
+                    <img src="../resource/icons/model_icons/externalLoad/GPSantenna.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_4">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Omnidirectionalantenna.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_5">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Opticalcamera.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_6">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Solarpanels.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_7">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Sailboard.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_8">
+
+                    <img src="../resource/icons/model_icons/externalLoad/Fule.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_9">
+
+                    <img src="../resource/icons/model_icons/externalLoad/DarkmatterSailboard.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_10">
+
+                    <img src="../resource/icons/model_icons/externalLoad/DarkmatterSingleCylinder.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="outerLoad_11">
+
+                    <img src="../resource/icons/model_icons/externalLoad/DarkmatterCube.png">
+                </li>
+            </div>
+
+            <h3 id="ConnectorTitle" class="header" style="border: 0">连接件</h3>
+            <div id="ConnectorModel" style="padding: 0 0 0 0;background-color: #212125;border: 0;">
+                <li class="button" onclick="api.addModel(this)" id="connector_1">
+                    <img src="../resource/icons/model_icons/basicLoad/Cone.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="connector_2">
+                    <img src="../resource/icons/model_icons/basicLoad/Subtainer.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="connector_3">
+                    <img src="../resource/icons/model_icons/basicLoad/SolarConnector.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="connector_4">
+                    <img src="../resource/icons/model_icons/basicLoad/CorkBase.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="connector_5">
+                    <img src="../resource/icons/model_icons/basicLoad/Base.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="connector_6">
+                    <img src="../resource/icons/model_icons/basicLoad/Bent.png">
+                </li>
+            </div>
+
+            <h3 id="boxTitle" class="header" style="border: 0">箱体</h3>
+            <div id="boxModel" style="padding: 0 0 0 0;background-color: #212125;border: 0;">
+                <li class="button" onclick="api.addModel(this)" id="box_1">
+                    <img src="../resource/icons/model_icons/platformLoad/Returncapsule.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="box_2">
+                    <img src="../resource/icons/model_icons/platformLoad/MidBox.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="box_3">
+                    <img src="../resource/icons/model_icons/platformLoad/CircularBox.png">
+                </li>
+                <li class="button" onclick="api.addModel(this)" id="box_4">
+                    <img src="../resource/icons/model_icons/basicLoad/Cube.png">
+                </li>
+            </div>
+
+        </div>
+    </div>
+    <div id="desiginScene" />
+</div>
+<!--<div id="scene" style="padding: 0 0 0 0;position:absolute;">-->
+<!--<div id="desiginScene"/>-->
+<!--</div>-->
+
+<!--组件参数面板-->
+<div id="parameter_dialog" title="组件参数" style="width:250px; display: none;" >
+    <div class="modal-body">
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">组件名称:</label>
+            <input type="text" class="dialog_input pull-right" id="model-name">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">组件类型:</label>
+            <input type="text" class="dialog_input pull-right" id="model-type">
+        </div>
+        <div class="dialog_div" id="div_explore_target">
+            <label class="control-label" style="padding-right: 2px;">探索目标:</label>
+            <input type="text" class="dialog_input pull-right" id="explore-target">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style=" padding-right: 2px;">质量(kg):</label>
+            <input class="dialog_input pull-right" type="number" step="any" id="model-mass" style="padding-right: 2px;">
+        </div>
+        <div class="dialog_div" id="div_model_average_power">
+            <label class="control-label" style="padding-right: 2px;">平均功率(W):</label>
+            <input class="dialog_input pull-right" type="number" step="any" id="model-average-power">
+        </div>
+        <div class="dialog_div" id="div_model_apex_power">
+            <label class="control-label" style="padding-right: 2px;">峰值功率(W):</label>
+            <input class="dialog_input pull-right" type="number" step="any" id="model-apex-power">
+        </div>
+        <!--<div class="dialog_div">-->
+        <!--<label class="control-label" style="padding-right: 2px;">节点名称:</label>-->
+        <!--<input type="text" class="dialog_input pull-right" id="model-node-name">-->
+        <!--</div>-->
+        <div class="dialog_div">
+            <button id="model_save_parameter" style="color: #000000;margin-top: 5px;" class="btn btn-default pull-right" onclick="StructParameter.save()">保存参数</button>
+        </div>
+    </div>
+</div>
+
+<!--列表板-->
+<div id="list_dialog" title="列表板" style="width:250px; display: none; " >
+    <div id="modelList" class="modal-body">
+
+    </div>
+</div>
+
+<!--操作面板-->
+<div id="operation_dialog" title="操作板" style="width:250px; display: none;" >
+    <div class="modal-body">
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">空间位置-X:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="PosX" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">空间位置-Y:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="PosY" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">空间位置-Z:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="PosZ" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style=" padding-right: 2px;">欧拉转角-X:</label>
+            <input class="dialog_input pull-right" type="number" step="any" id="AngleX" style="padding-right: 2px;" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">欧拉转角-Y:</label>
+            <input class="dialog_input pull-right" type="number" step="any" id="AngleY" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">欧拉转角-Z:</label>
+            <input class="dialog_input pull-right" type="number" step="any" id="AngleZ" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">缩放比例-X:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="ScaleX" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">缩放比例-Y:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="ScaleY" onchange="OperationPannel.changePos()">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">缩放比例-Z:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="ScaleZ" onchange="OperationPannel.changePos()">
+        </div>
+    </div>
+</div>
+
+<!--分类管理面板-->
+<div id="classify_dialog" title="分类管理面板" style="width:250px; display: none;">
+    <div class="modal-body">
+        <div class="row" id="classify_control">
+            <span class="col-lg-4"></span>
+            <span >隐藏</span>
+            <span >冻结</span>
+            <span >锁定</span>
+        </div>
+        <div class="row">
+            <span class="col-lg-4">基础模型</span>
+            <input type="checkbox" style="position: absolute; left: 36%;" id="baseChecked" onclick="ClassifyPannel.showOrHide()">
+            <input type="checkbox" style="position: absolute; left: 48%;" id="baseFrozen" onclick="ClassifyPannel.frozenModel()">
+            <input type="checkbox" style="position: absolute; left: 60%;" >
+        </div>
+        <div class="row">
+            <span class="col-lg-4">卫星平台</span>
+            <input type="checkbox" style="position: absolute; left: 36%;" id="satChecked" onclick="ClassifyPannel.showOrHide()">
+            <input type="checkbox" style="position: absolute; left: 48%;" id="satFrozen" onclick="ClassifyPannel.frozenModel()">
+            <input type="checkbox" style="position: absolute; left: 60%;">
+        </div>
+        <!--<div class="row">-->
+        <div class="row">
+            <span class="col-lg-4">箱体</span>
+            <input type="checkbox" style="position: absolute; left: 36%;" id="platChecked" onclick="ClassifyPannel.showOrHide()">
+            <input type="checkbox" style="position: absolute; left: 48%;" id="platFrozen" onclick="ClassifyPannel.frozenModel()">
+            <input type="checkbox" style="position: absolute; left: 60%;">
+        </div>
+        <div class="row">
+            <span class="col-lg-4">内部组件</span>
+            <input type="checkbox" style="position: absolute; left: 36%;" id="innerChecked" onclick="ClassifyPannel.showOrHide()">
+            <input type="checkbox" style="position: absolute; left: 48%;" id="innerFrozen" onclick="ClassifyPannel.frozenModel()">
+            <input type="checkbox" style="position: absolute; left: 60%;">
+        </div>
+        <div class="row">
+            <span class="col-lg-4">外部组件</span>
+            <input type="checkbox" style="position: absolute; left: 36%;" id="outerChecked" onclick="ClassifyPannel.showOrHide()">
+            <input type="checkbox" style="position: absolute; left: 48%;" id="outerFrozen" onclick="ClassifyPannel.frozenModel()">
+            <input type="checkbox" style="position: absolute; left: 60%;">
+        </div>
+    </div>
+</div>
+
+<!--统计面板-->
+<div id="statistic_dialog" title="统计面板" style="width:250px; display: none;">
+    <div>
+        <span>总质量(Kg)：</span>
+        <span id="massvalue" class="pull-right"></span>
+    </div>
+    <div>
+        <span>总功率(W)：</span>
+        <span id="powervalue" class="pull-right"></span>
+    </div>
+    <div>
+        <span>总功率峰值(W)：</span>
+        <span id="maxpowervalue" class="pull-right"></span>
+    </div>
+    <div>
+        <span>质心-X：</span>
+        <span id="center_X" class="pull-right"></span>
+    </div>
+    <div>
+        <span>质心-Y：</span>
+        <span id="center_Y" class="pull-right"></span>
+    </div>
+    <div>
+        <span>质心-Z：</span>
+        <span id="center_Z" class="pull-right"></span>
+    </div>
+</div>
+
+
+<!--二级列表板-->
+
+<input id="list_secondary_template" style="margin-left: 20px;display:none;border: 0px;background: transparent;" onchange="ListPannel.changeName(this)">
+
+
+<!--一级列表板-->
+<div id="list_template" style="display: none;">
+    <input class="modelChecked" type="checkbox" onclick="ListPannel.chooseModel(this)"/>
+    <input class="modelName" style="border: 0px;background: transparent;" onchange="ListPannel.changeName(this)">
+    <img class="modelVisible pull-right" src="../resource/icons/button_icons/visible.png" onclick="ListPannel.visibleModel(this)"/>
+</div>
+<!--阵列面板-->
+<div id="shatter_crack_dialog" title="阵列面板" style="width:250px; display: none;" onkeydown="return Navigation.crackKeydown(event)">
+    <div class="dialog_div">
+        <label class="control-label" style="padding-right: 2px;">阵列数量:</label>
+        <input class="dialog_input pull-right" type="number" step="any" id="crackNum" style="padding-right: 2px;"><br>
+    </div>
+    <div class="dialog_div">
+        <label class="control-label" style="padding-right: 2px;">阵列轴:</label>
+        <select class="dialog_input pull-right" id="crackAxis" style="padding-right: 2px">
+            <option value ="crackX">X轴</option>
+            <option value ="crackY" selected="selected">Y轴</option>
+            <option value="crackZ">Z轴</option>
+        </select>
+    </div>
+    <div class="dialog_div">
+        <button id="shatter_crack_OK" style="color: #000000;margin-top: 5px;" class="btn btn-default pull-right" onclick="Navigation.crackOK()">确定</button>
+    </div>
+</div>
+
+<!--相机视场面板-->
+    <div id="camera_view_dialog" title="相机视场" style="width:250px; display: none;" >
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">视场高度:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="camera-view-height">
+        </div>
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">视场底面半径:</label>
+            <input type="number" step="any" class="dialog_input pull-right" id="camera-view-angle">
+        </div>
+        <div class="dialog_div">
+            <button id="camera_view_OK" style="color: #000000;margin-top: 5px;" class="btn btn-default pull-right" onclick="Navigation.updateCameraView()">确定</button>
+            <button id="camera_view_show" style="color: #000000;margin-top: 5px;margin-right:127px" class="btn btn-default pull-right" onclick="Navigation.showCameraView()">隐藏视场</button>
+        </div>
+    </div>
+
+<!--是否保存文件提示框-->
+<div id="is_save_dialog" title="卫星结构设计工具" style="width:250px; display: none;">
+    <div class="modal-body">
+        <div class="dialog_div">是否保存</div>
+    </div>
+    <div class="dialog_div">
+        <button id="is_save_cancel" style="width: 70px;color: #000000;margin-top: 5px;" class="btn btn-default pull-right" onclick="MessageBox.isSaveCancel()">取消</button>
+        <button id="no_save" style="width: 70px;color: #000000;margin-top: 5px;margin-left: 28px" class="btn btn-default pull-center" onclick="MessageBox.noSave()">否</button>
+        <button id="yes_save" style="width: 70px;color: #000000;margin-top: 5px;" class="btn btn-default pull-left" onclick="MessageBox.yesSave()">是</button>
+    </div>
+</div>
+<!--保存文件提示框-->
+<div id="save_file_dialog" title="卫星结构设计工具" style="width:250px; display: none;">
+    <div class="modal-body">
+        <div class="dialog_div">
+            <label class="control-label" style="padding-right: 2px;">请输入文件名:</label>
+            <input type="text" step="any" class="dialog_input pull-right" id="structure_file_name">
+        </div>
+        <div class="dialog_div">
+            <button id="cancel_save_structure_file" style="width: 70px;color: #000000;margin-top: 5px;" class="btn btn-default pull-right" onclick="MessageBox.cancelSaveStructureFile()">取消</button>
+            <button id="ok_save_structure_file" style="width: 70px;color: #000000;margin-top: 5px;" class="btn btn-default pull-left" onclick="MessageBox.okSaveStructureFile()">确定</button>
+        </div>
+    </div>
+</div>
+
+
+<!--打开文件列表-->
+<div id="open_file_list_dialog" title="卫星结构设计工具" style="width:250px; display: none;">
+    <div class="modal-body">
+        <div class="dialog_div">
+            <button id="cancel_open_structure_file_list" style="width: 70px;color: #000000;margin-top: 5px;" class="btn btn-default pull-right" onclick="MessageBox.cancelOpenStructureFile()">取消</button>
+            <button id="open_structure_file_list" style="width: 70px;color: #000000;margin-top: 5px;" class="btn btn-default pull-left" onclick="MessageBox.openStructureFile()">打开</button>
+        </div>
+    </div>
+</div>
+<div id="select_box" class="selectBoxDiv" style="display: none;"></div>
+
+</body>
+</html>
