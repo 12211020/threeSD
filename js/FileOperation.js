@@ -27,8 +27,17 @@ FileOperation.exportSceneFile = function(){
         //将material文件下载到本地
         FileOperation.fileExport(materialData.data, materialData.fileName, "material");
         //将mesh文件下载到本地
-        for(var i = 0; i < meshDatas.length; i++){
-            FileOperation.fileExport(meshDatas[i]["data"], meshDatas[i]["fileName"], "mesh.xml");
+        for(var i = 0; i < meshDatas.length; ++i){
+            const execSync = require("child_process").execSync;
+            const fs = require("fs");
+            var fileName = meshDatas[i]["fileName"] + ".mesh.xml";
+            fs.writeFileSync(fileName, meshDatas[i]["data"]);
+            execSync("OgreXMLConverter " + meshDatas[i]["fileName"] + ".mesh.xml");
+            var fileData = fs.readFileSync(meshDatas[i]["fileName"] + ".mesh");
+            FileOperation.fileExport(fileData, meshDatas[i]["fileName"], "mesh");
+            fs.unlink(fileName);
+            fs.unlink(meshDatas[i]["fileName"] + ".mesh");
+//            FileOperation.fileExport(meshDatas[i]["data"], meshDatas[i]["fileName"], "mesh.xml");
         }
     }
 };
