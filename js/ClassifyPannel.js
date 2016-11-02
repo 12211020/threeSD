@@ -9,6 +9,8 @@ ClassifyPannel.classifyModel=function(modelName){
     switch(modelName)
     {
         case "baseModel": return 0;
+        case "platformModel": return 1;
+
         // case "baseMode_1": return 0;
         // case "baseMode_2": return 0;
         // case "baseMode_3": return 0;

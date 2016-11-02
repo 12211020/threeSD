@@ -10,7 +10,9 @@ $(function () {
 var fs = require('fs');
 var path = require('path');
 base_model_dir = "resource/baseModel";
+platform_dir = "resource/platformModel";
 basic_models = fs.readdirSync(base_model_dir);
+platform_models = fs.readdirSync(platform_dir);
 //console.log(resource);
 
 var obj;
@@ -21,6 +23,15 @@ var obj;
             //filepath = path.join('resource/basic',basename);
             filepath = '../baseModel/'+basename;
             $('#basic_model_panel').append('<li class="button" onclick="api.addModel(\''+filepath+'\')" > <img src="../resource/baseModel/'+ basename+'.png"> </li>');
+        }
+    });
+    platform_models.forEach(function (filePath) {
+        //console.log(file);
+        if(path.extname(filePath) == '.png') {
+            basename = path.basename(filePath, '.png'); // default the type of the icons is png
+            //filepath = path.join('resource/basic',basename);
+            filepath = '../platformModel/'+basename;
+            $('#platform_model_panel').append('<li class="button" onclick="api.addModel(\''+filepath+'\')" > <img src="../resource/platformModel/'+ basename+'.png"> </li>');
         }
     });
     //$('#basic_model_panel').append('<li class="button" onclick="api.addModel(this)" id="baseMode_1"> <img src="../resource/icons/model_icons/basicLoad/Cube.png"> </li>');
