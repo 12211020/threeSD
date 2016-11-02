@@ -10,6 +10,8 @@ ClassifyPannel.classifyModel=function(modelName){
     {
         case "baseModel": return 0;
         case "platformModel": return 1;
+        case "internalModel": return 2;
+        case "externalModel": return 3;
 
         // case "baseMode_1": return 0;
         // case "baseMode_2": return 0;

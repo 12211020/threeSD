@@ -9,10 +9,16 @@ $(function () {
 
 var fs = require('fs');
 var path = require('path');
-base_model_dir = "resource/baseModel";
-platform_dir = "resource/platformModel";
+base_model_dir      = "resource/baseModel";
+platform_model_dir = "resource/platformModel";
+internal_model_dir = "resource/internalModel";
+external_model_dir = "resource/externalModel";
+
+
 basic_models = fs.readdirSync(base_model_dir);
-platform_models = fs.readdirSync(platform_dir);
+platform_models = fs.readdirSync(platform_model_dir);
+internal_models = fs.readdirSync(internal_model_dir);
+external_models = fs.readdirSync(external_model_dir);
 //console.log(resource);
 
 var obj;
@@ -32,6 +38,24 @@ var obj;
             //filepath = path.join('resource/basic',basename);
             filepath = '../platformModel/'+basename;
             $('#platform_model_panel').append('<li class="button" onclick="api.addModel(\''+filepath+'\')" > <img src="../resource/platformModel/'+ basename+'.png"> </li>');
+        }
+    });
+    internal_models.forEach(function (filePath) {
+        //console.log(file);
+        if(path.extname(filePath) == '.png') {
+            basename = path.basename(filePath, '.png'); // default the type of the icons is png
+            //filepath = path.join('resource/basic',basename);
+            filepath = '../internalModel/'+basename;
+            $('#innerLoadModel').append('<li class="button" onclick="api.addModel(\''+filepath+'\')" > <img src="../resource/internalModel/'+ basename+'.png"> </li>');
+        }
+    });
+    external_models.forEach(function (filePath) {
+        //console.log(file);
+        if(path.extname(filePath) == '.png') {
+            basename = path.basename(filePath, '.png'); // default the type of the icons is png
+            //filepath = path.join('resource/basic',basename);
+            filepath = '../externalModel/'+basename;
+            $('#outerLoadModel').append('<li class="button" onclick="api.addModel(\''+filepath+'\')" > <img src="../resource/externalModel/'+ basename+'.png"> </li>');
         }
     });
     //$('#basic_model_panel').append('<li class="button" onclick="api.addModel(this)" id="baseMode_1"> <img src="../resource/icons/model_icons/basicLoad/Cube.png"> </li>');
