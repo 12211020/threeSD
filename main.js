@@ -19,7 +19,6 @@
     });
     mainWindow.setMenu(null);
     mainWindow.loadURL("file://" + __dirname + "/index.html");
-    mainWindow.webContents.openDevTools();
     return mainWindow.on('closed', function() {
       return mainWindow = void 0;
     });
