@@ -32,7 +32,7 @@ FileOperation.exportSceneFile = function(){
             const fs = require("fs");
             var fileName = meshDatas[i]["fileName"] + ".mesh.xml";
             fs.writeFileSync(fileName, meshDatas[i]["data"]);
-            execSync("OgreXMLConverter " + meshDatas[i]["fileName"] + ".mesh.xml", {stdio:[null,null]});
+            execSync("OgreXMLConverter " + meshDatas[i]["fileName"] + ".mesh.xml", {stdio:'inherit'});
             var fileData = fs.readFileSync(meshDatas[i]["fileName"] + ".mesh");
             FileOperation.fileExport(fileData, meshDatas[i]["fileName"], "mesh");
             fs.unlink(fileName);
