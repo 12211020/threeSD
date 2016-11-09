@@ -433,7 +433,7 @@ class @ThreeSD
     fixCombinationPosition(parent)
 
   #添加OBJMTL的对象到场景中，这个应该有撤消记录
-  addObject = (object, name = "没名儿", position = new THREE.Vector3(0,0,0), root = self.root)->
+  addObject = (object, name = "Unnamed", position = new THREE.Vector3(0,0,0), root = self.root)->
 
     object.position.copy(position) if position
     object.name = name
@@ -558,7 +558,7 @@ class @ThreeSD
 
   redo : redo
 
-  addOBJMTL : (object, name = "没名儿", position = new THREE.Vector3(0,0,0), root = self.root)->
+  addOBJMTL : (object, name = "Unnamed", position = new THREE.Vector3(0,0,0), root = self.root)->
     addObject(object, name, position, root)
     logCreate(object)
     clearSelect(object)
