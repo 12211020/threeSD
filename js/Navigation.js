@@ -9,10 +9,10 @@ $(function () {
 
 var fs = require('fs');
 var path = require('path');
-base_model_dir      = "resource/baseModel";
-platform_model_dir = "resource/platformModel";
-internal_model_dir = "resource/internalModel";
-external_model_dir = "resource/externalModel";
+base_model_dir      = "resources/app/resource/baseModel";
+platform_model_dir = "resources/app/resource/platformModel";
+internal_model_dir = "resources/app/resource/internalModel";
+external_model_dir = "resources/app/resource/externalModel";
 
 
 basic_models = fs.readdirSync(base_model_dir);
