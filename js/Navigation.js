@@ -464,28 +464,48 @@ Navigation.saveAsFile = function () {
     Navigation.saveAsStructureFileDialog();
 };
 //导出文件
-Navigation.exportFile = function () {
-    //获取当前场景中组件的mesh格式数据
-    var data = FileOperation.exportSceneFile();
-    if(data != null){
-        //将mesh.xml文件下载到本地
-        var aLink = document.createElement("a");
-        var blob = new Blob([data["mesh"]]);
-        var evt = document.createEvent("MouseEvents");
-        evt.initEvent("click", false, false);
-        aLink.download = data["fileName"] + ".mesh.xml";
-        aLink.href = URL.createObjectURL(blob);
-        aLink.dispatchEvent(evt);
-        //将material文件下载到本地
-        aLink = document.createElement("a");
-        blob = new Blob([data["material"]]);
-        evt = document.createEvent("MouseEvents");
-        evt.initEvent("click", false, false);
-        aLink.download = data["fileName"] + ".material";
-        aLink.href = URL.createObjectURL(blob);
-        aLink.dispatchEvent(evt);
+Navigation.exportFile = function (event, path) {
+    if (path != null && path != undefined){
+        //将path中的路径和文件名分开
+        var paths = path.split("\\");
+        var filePath = "", sceneFileName = paths[paths.length - 1];
+        for(var i = 0; i < paths.length - 1; ++i){
+            filePath += paths[i] + "\\";
+        }
+        //获取场景中模型的scene、mesh和material内容
+        var sceneData = {data: "", fileName: ""}, meshDatas = [], meshFileNameNum = [], materialData = {data: "", fileName: ""};
+        api.getStructureScene(sceneData, meshDatas, meshFileNameNum, materialData);
+        //判断场景中是否有模型
+        if(meshDatas.length > 0){
+            //将scene文件下载到本地
+            FileOperation.fileSave(sceneData.data, filePath, sceneFileName);
+            //将material文件下载到本地
+            FileOperation.fileSave(materialData.data, filePath, sceneFileName.split(".")[0] + ".material");
+            //将mesh文件下载到本地
+            for(var i = 0; i < meshDatas.length; ++i){
+                const execSync = require("child_process").execSync;
+                const fs = require("fs");
+                var fileName = meshDatas[i]["fileName"] + ".mesh.xml";
+                fs.writeFileSync(fileName, meshDatas[i]["data"]);
+                execSync("OgreXMLConverter " + meshDatas[i]["fileName"] + ".mesh.xml", {stdio:'inherit'});
+                var fileData = fs.readFileSync(meshDatas[i]["fileName"] + ".mesh");
+                FileOperation.fileSave(fileData, filePath, meshDatas[i]["fileName"] + ".mesh");
+                fs.unlink(fileName);
+                fs.unlink(meshDatas[i]["fileName"] + ".mesh");
+            }
+        }
+    }
+    else{
+
     }
 };
+//注册文件导出事件监听
+const ipcRenderer = require('electron').ipcRenderer;
+const saveBtn = document.getElementById('export');
+saveBtn.addEventListener('click', function (event) {
+    ipcRenderer.send('save-dialog');
+});
+ipcRenderer.on('saved-file',Navigation.exportFile);
 //打开组件参数面板
 Navigation.openParaPanel = function () {
     $('#parameter_dialog').dialog({

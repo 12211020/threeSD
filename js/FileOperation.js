@@ -15,31 +15,10 @@ FileOperation.fileExport = function (data, fileName, extension){
     aLink.href = URL.createObjectURL(blob);
     aLink.dispatchEvent(evt);
 };
-//导出scene文件
-FileOperation.exportSceneFile = function(){
-    //获取场景中模型的scene、mesh和material内容
-    var sceneData = {data: "", fileName: ""}, meshDatas = [], meshFileNameNum = [], materialData = {data: "", fileName: ""};
-    api.getStructureScene(sceneData, meshDatas, meshFileNameNum, materialData);
-    //判断场景中是否有模型
-    if(meshDatas.length > 0){
-        //将scene文件下载到本地
-        FileOperation.fileExport(sceneData.data, sceneData.fileName, "scene");
-        //将material文件下载到本地
-        FileOperation.fileExport(materialData.data, materialData.fileName, "material");
-        //将mesh文件下载到本地
-        for(var i = 0; i < meshDatas.length; ++i){
-            const execSync = require("child_process").execSync;
-            const fs = require("fs");
-            var fileName = meshDatas[i]["fileName"] + ".mesh.xml";
-            fs.writeFileSync(fileName, meshDatas[i]["data"]);
-            execSync("OgreXMLConverter " + meshDatas[i]["fileName"] + ".mesh.xml", {stdio:'inherit'});
-            var fileData = fs.readFileSync(meshDatas[i]["fileName"] + ".mesh");
-            FileOperation.fileExport(fileData, meshDatas[i]["fileName"], "mesh");
-            fs.unlink(fileName);
-            fs.unlink(meshDatas[i]["fileName"] + ".mesh");
-//            FileOperation.fileExport(meshDatas[i]["data"], meshDatas[i]["fileName"], "mesh.xml");
-        }
-    }
+//给定数据和路径保存文件
+FileOperation.fileSave = function(data, path, fileName){
+    const fs = require("fs");
+    fs.writeFileSync(path + fileName, data);
 };
 //保存文件到服务器
 FileOperation.save = function(path, fileName, data){

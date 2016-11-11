@@ -346,9 +346,9 @@
                       var ambient = structure.children[j].material.color;
                       var diffuse = structure.children[j].material.color;
                       var specular = structure.children[j].material.specular;
-                      materialData.data += "\t\t\tambient " + ambient.r + " " + ambient.g + " " + ambient.b + "\n";
-                      materialData.data += "\t\t\tdiffuse " + diffuse.r + " " + diffuse.g + " " + diffuse.b + "\n";
-                      materialData.data += "\t\t\tspecular " + specular.r + " " + specular.g + " " + specular.b + "\n";
+                      materialData.data += "\t\t\tambient " + ambient.r + " " + ambient.g + " " + ambient.b + " 1\n";
+                      materialData.data += "\t\t\tdiffuse " + diffuse.r + " " + diffuse.g + " " + diffuse.b + " 1\n";
+                      materialData.data += "\t\t\tspecular " + specular.r + " " + specular.g + " " + specular.b + " 1 20\n";
                       materialData.data += "\t\t}\n";
                       materialData.data += "\t}\n";
                       materialData.data += "}\n";

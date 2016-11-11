@@ -40,5 +40,18 @@
   });
 
 }).call(this);
-
+//声明一个保存文件的窗口
+const ipc = require('electron').ipcMain;
+const dialog = require('electron').dialog;
+ipc.on('save-dialog', function (event) {
+    const options = {
+        title: '导出卫星模型',
+        filters: [
+            { name: 'Model', extensions: ['scene'] }
+        ]
+    };
+    dialog.showSaveDialog(options, function (filename) {
+        event.sender.send('saved-file', filename);
+    })
+});
 //# sourceMappingURL=main.js.map
