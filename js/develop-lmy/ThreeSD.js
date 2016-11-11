@@ -597,7 +597,7 @@
     addObject = function(object, name, position, root) {
       var base1, base2, base3, base4, base5, base6;
       if (name == null) {
-        name = "没名儿";
+        name = "Unnamed";
       }
       if (position == null) {
         position = new THREE.Vector3(0, 0, 0);
@@ -773,7 +773,7 @@
 
     ThreeSD.prototype.addOBJMTL = function(object, name, position, root) {
       if (name == null) {
-        name = "没名儿";
+        name = "Unnamed";
       }
       if (position == null) {
         position = new THREE.Vector3(0, 0, 0);
