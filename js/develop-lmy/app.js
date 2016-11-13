@@ -283,11 +283,11 @@
                       var fileName = getMeshFilename(structure.name);
                       sceneData.data += "<node name=\"" + fileName + "\">";
                       sceneData.data += "<position x=\"" + structure.position.x + "\" y=\"" + structure.position.y + "\" z=\"" + structure.position.z + "\"/>";
-                      var tmp = structure.clone();
-                      structure.parent.updateMatrix();
-                      structure.parent.updateMatrixWorld();
-                      tmp.applyMatrix(structure.parent.matrixWorld);
-                      sceneData.data += "<scale x=\"" + tmp.scale.x + "\" y=\"" + tmp.scale.y + "\" z=\"" + tmp.scale.z + "\"/>";
+//                      var tmp = structure.clone();
+//                      structure.parent.updateMatrix();
+//                      structure.parent.updateMatrixWorld();
+//                      tmp.applyMatrix(structure.parent.matrixWorld);
+                      sceneData.data += "<scale x=\"" + structure.scale.x + "\" y=\"" + structure.scale.y + "\" z=\"" + structure.scale.z + "\"/>";
                       sceneData.data += "<rotation qx=\"" + structure.quaternion.x + "\" qy=\"" + structure.quaternion.y + "\" qz=\"" + structure.quaternion.z + "\" qw=\"" + structure.quaternion.w + "\"/>";
                       if(api.isStructureMesh(structure)){
                           api.getStructureMeshMaterial(structure, meshDatas, meshFileNameNum, materialData, fileName);
